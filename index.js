@@ -13,7 +13,7 @@ function diceRoll() {
 
 // Dropdown Menu
 let dropdownOptions = document.querySelectorAll('#list li');
-dropdownOptions.forEach((dropdownOption) => {
+dropdownOptions.forEach(dropdownOption => {
   dropdownOption.addEventListener('click', e => {
     let numberOfChoices = parseInt(e.target.innerText);
     document.getElementById('dropdownMenu').innerHTML = `${numberOfChoices}<span class="caret"></span>`;
@@ -32,6 +32,15 @@ dropdownOptions.forEach((dropdownOption) => {
     }
   })
 })
+
+// Actively changing Dice Captions
+let userInputFields = document.querySelectorAll('#userInputFields input');  
+userInputFields.forEach(((userInputField, i) => {
+  userInputField.addEventListener('change', e => {
+    i++;
+    document.getElementById('caption' + i).innerHTML = e.target.value;
+  });
+}));
 
 // Declaring Variables
 var randomNo1 = 6, 
@@ -62,18 +71,6 @@ $("#submit").click(e => {
   var choice4 = $("#choice4").val();
   var noOfChoices = parseInt($("#dropdownMenu").innerText);
   var diceValues = [];
-
-  // Display user input as dice captions
-  let userInputFields = document.querySelectorAll('#userInputFields input');
-  userInputFields.forEach(userInputField => {
-    userInputFields.change(function(){
-      alert( "Handler for .change() called." );
-    })
-  });
-  $("#caption1").html(choice1);
-  $("#caption2").html(choice2);
-  $("#caption3").html(choice3);
-  $("#caption4").html(choice4);
 
   // Picking Winner
   switch(noOfChoices) {
@@ -121,3 +118,4 @@ function printWin() {
   $("#title").html(winner + " wins! 🏆");
   $("#title").addClass("greenify bigger").removeClass("redify");
 }
+
