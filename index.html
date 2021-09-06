@@ -3,62 +3,56 @@
 
 <head>
   <meta charset="utf-8">
+  <!-- Title & Favicon -->
   <title>Diceey</title>
+  <link rel="icon" href="dice-logo.png">
 
-  <!-- Bootstrap, CSS -->
+  <!-- Load Bootstrap before linking to Stylesheet -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Google Font -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster" rel="stylesheet">
 
-  <!-- Jquery Links -->
+  <!-- Jquery -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
-
 <body>
   
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <div class="container-fluid heading">
     <h1 id="title"> Diceey</h1>
     <h5>Can't decide? Let Diceey help.</h5>
   </div>
-
   <div class="container-fluid instructions">
 
   <!-- Images -->
   <div class="container-fluid">
-
     <div class="container-of-images">
-      <img src="chick2.png">
-
-      <figure>
-        <img id="img1" class="dice" src="dice6.png">
+      <img src="chick2.png" class="d-none d-lg-inline">
+      <figure class="choice1">
+        <img id="dice1" class="dice" src="dice6.png">
         <figcaption class="caption" id="caption1">Choice 1</figcaption>
       </figure>
-
-      <figure>
-        <img id="img2" class="dice" src="dice6.png">
+      <figure class="choice2">
+        <img id="dice2" class="dice" src="dice6.png">
         <figcaption class="caption" id="caption2">Choice 2</figcaption>
       </figure>
-
-      <figure class="3Choices">
-        <img id="img3" class="dice" src="dice6.png">
+      <br class="d-md-none">
+      <figure class="choice3">
+        <img id="dice3" class="dice" src="dice6.png">
         <figcaption class="caption" id="caption3">Choice 3</figcaption>
       </figure>
-
-      <figure class="4Choices">
-        <img id="img4" class="dice" src="dice6.png">
+      <figure class="choice4">
+        <img id="dice3" class="dice" src="dice6.png">
         <figcaption class="caption" id="caption4">Choice 4</figcaption>
       </figure>
-      <img src="chick1.png">
+      <img src="chick1.png" class="d-none d-lg-inline">
     </div>
   </div>
-
 
 <!-- Forms -->
 
@@ -80,11 +74,11 @@
       </ul>
 
       <!-- Input Text Fields -->
-      <div class="container-inner">  <br>
-        <input class="text-input-box" id="choice1" type="text" name="" value="" placeholder="Choice 1"> <br>
-        <input class="text-input-box" id="choice2" type="text" name="" value="" placeholder="Choice 2"> <br>
-        <input class="text-input-box invisible 3Choices" id="choice3" type="text" name="" value="" placeholder="Choice 3"> <br>
-        <input class="text-input-box invisible 4Choices" id="choice4" type="text" name="" value="" placeholder="Choice 4">
+      <div id="userInputFields" class="container-inner"><br>
+        <input class="text-input-box choice1" id="choice1" type="text" name="" value="" placeholder="Choice 1"> <br>
+        <input class="text-input-box choice2" id="choice2" type="text" name="" value="" placeholder="Choice 2"> <br>
+        <input class="text-input-box choice3" id="choice3" type="text" name="" value="" placeholder="Choice 3"> <br>
+        <input class="text-input-box choice4" id="choice4" type="text" name="" value="" placeholder="Choice 4">
       </div>
     </div>
 
@@ -95,29 +89,9 @@
   <a href="" id="submit" class="btn btn-info btn-lg" role="button">Go</a>
 </div>
 
+<!-- Load javascript after the page loads -->
+<script src="index.js" charset="utf-8"></script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script src="index.js" charset="utf-8">
-  </script>
 </body>
 
 <footer>
