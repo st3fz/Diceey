@@ -71,19 +71,19 @@ figure {
   vertical-align: middle;
 }
 
-#img1 {
+#dice1 {
   transform: rotate(2deg);
 }
 
-#img2 {
+#dice2 {
   transform: rotate(-1deg);
 }
 
-#img3 {
+#dice3 {
   transform: rotate(1deg);
 }
 
-#img4 {
+#doce4 {
   transform: rotate(-1deg);
 }
 
@@ -119,18 +119,8 @@ footer {
   font-family: 'Indie Flower', cursive;
 }
 
-/* Invisble */
-.invisible {
-  display: none;
-}
+.greenify {color: green;}
 
-.hidden {
-  visibility: hidden;
-}
-
-
-.green {color: green;}
-
-.red {color: #FF6347;}
+.redify {color: #FF6347;}
 
 .bigger {font-size: 5rem;}
