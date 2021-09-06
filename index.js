@@ -1,56 +1,43 @@
 function diceRoll() {
-
+  // Random dice numbers
+  for (let i = 1; i < 5; i ++){
+    let imageSrc = "dice" + Math.floor(Math.random() * 6 + 1) + ".png";
+    document.querySelectorAll("img")[i].setAttribute("src", imageSrc);
+  }
+  
   // Dice animation
-  $(".dice").addClass("rotate");
-  $(".dice").on("animationend", function() {
+  $(".dice").addClass("rotate").on("animationend", ()=>{
     $(".dice").removeClass("rotate");
   })
-
-  // Diceroll
-  randomNumber1 = Math.floor(Math.random() * 6 + 1);
-  Image1 = "dice" + randomNumber1 + ".png";
-  document.querySelectorAll("img")[1].setAttribute("src", Image1);
-
-  randomNumber2 = Math.floor(Math.random() * 6 + 1);
-  Image2 = "dice" + randomNumber2 + ".png";
-  document.querySelectorAll("img")[2].setAttribute("src", Image2);
-
-  randomNumber3 = Math.floor(Math.random() * 6 + 1);
-  Image3 = "dice" + randomNumber3 + ".png";
-  document.querySelectorAll("img")[3].setAttribute("src", Image3);
-
-  randomNumber4 = Math.floor(Math.random() * 6 + 1);
-  Image4 = "dice" + randomNumber4 + ".png";
-  document.querySelectorAll("img")[4].setAttribute("src", Image4);
 }
 
-// Responding to Dropdown Button
-let links = document.querySelectorAll('#list li')
-links.forEach((el) => {
-  el.addEventListener('click', (event) => {
-
-    let numberOfChoices = event.target.innerText
-    document.getElementById('dropdownMenu').innerHTML = `${numberOfChoices}<span class="caret"></span>`
-
-    if (numberOfChoices === "2") {
-      $(".3Choices, .4Choices").addClass("invisible")
-    }
-    if (numberOfChoices === "3") {
-      $(".4Choices").addClass("invisible");
-      $(".3Choices").removeClass("invisible")
-    }
-    if (numberOfChoices === "4") {
-      $(".3Choices, .4Choices").removeClass("invisible");
+// Dropdown Menu
+let dropdownOptions = document.querySelectorAll('#list li');
+dropdownOptions.forEach((dropdownOption) => {
+  dropdownOption.addEventListener('click', e => {
+    let numberOfChoices = parseInt(e.target.innerText);
+    document.getElementById('dropdownMenu').innerHTML = `${numberOfChoices}<span class="caret"></span>`;
+    // Toggling the Number of Blanks and Dice
+    switch(numberOfChoices) {
+      case 2:
+        $(".choice3, .choice4").addClass("d-none");
+        break;
+      case 3: 
+        $(".choice4").addClass("d-none");
+        $(".choice3").removeClass("d-none");
+        break;
+      case 4: 
+        $(".choice3, .choice4").removeClass("d-none");
+        break;
     }
   })
 })
 
-
-// Variables
-var randomNumber1;
-var randomNumber2;
-var randomNumber3;
-var randomNumber4;
+// Declaring Variables
+var randomNo1 = 6, 
+randomNo2 = 6, 
+randomNo3 = 6,
+randomNo4 = 6;
 var Image1;
 var Image2;
 var Image3;
@@ -58,73 +45,79 @@ var Image4;
 var isTie;
 var winNo;
 var userChoices = [];
-var chosen;
+var winner;
 var winnerPosition;
-function printWin() {$("#title").html(chosen + " wins! 🏆");
-$("#title").addClass("green bigger").removeClass("red");}
 
 // Responding to Submit
-$("#submit").click(function(e) {
+$("#submit").click(e => {
+  // Changes button html and roll dice
   e.preventDefault();
-
   $("#submit").html("Again");
   diceRoll();
-  // Storing Data into variables
+
+  // Storing User inputs
   var choice1 = $("#choice1").val();
   var choice2 = $("#choice2").val();
   var choice3 = $("#choice3").val();
   var choice4 = $("#choice4").val();
-  var noOfChoices = $("#dropdownMenu").text();
+  var noOfChoices = parseInt($("#dropdownMenu").innerText);
   var diceValues = [];
 
-  // Display user input
+  // Display user input as dice captions
+  let userInputFields = document.querySelectorAll('#userInputFields input');
+  userInputFields.forEach(userInputField => {
+    userInputFields.change(function(){
+      alert( "Handler for .change() called." );
+    })
+  });
   $("#caption1").html(choice1);
   $("#caption2").html(choice2);
   $("#caption3").html(choice3);
   $("#caption4").html(choice4);
 
-  // Winner
-  if (noOfChoices === "2") {
-    if (randomNumber1 > randomNumber2) {
-      chosen = choice1
+  // Picking Winner
+  switch(noOfChoices) {
+    case 2: 
+      if (randomNo1 === randomNo2) {
+        $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");
+      } else if (randomNo1 > randomNo2) {
+        winner = choice1
+        printWin(winner);
+      } else {
+        winner = choice2;
+        printWin(winner);
+      }
+      break;
+    case 3: 
+      userChoices = [choice1, choice2, choice3];
+      diceValues.push(randomNo1, randomNo2, randomNo3);
+      let maxDice = Math.max(...diceValues);
+      diceValues.filter(x => x === maxDice).length > 1 ? isTie = "True" : isTie = "False";
+      if (isTie === "True") {
+        $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");;
+      } else {
+        winnerPosition = diceValues.indexOf(maxDice);
+        winner = userChoices[winnerPosition];
       printWin();
-    } else if (randomNumber2 > randomNumber1) {
-      chosen = choice2
+      }
+      break;
+    case 4: 
+      diceValues.push(randomNo1, randomNo2, randomNo3, randomNo4);
+      let maxDice2 = Math.max(...diceValues);
+      diceValues.filter(x => x === maxDice2).length > 1 ? isTie = "True" : isTie = "False";
+      if (isTie === "True") {
+        $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");;
+      } else {
+        winnerPosition = diceValues.indexOf(maxDice2);
+        winner = userChoices[winnerPosition];
       printWin();
-    } else if (randomNumber2 = randomNumber1) {
-      $("#title").html("Tie, please try again!").addClass("red bigger").removeClass("green");;
-    }
+      }
+      break;
   }
-
-  if (noOfChoices === "3") {
-    userChoices = [choice1, choice2, choice3];
-
-    diceValues.push(randomNumber1, randomNumber2, randomNumber3);
-    let maxDice = Math.max(...diceValues);
-    diceValues.filter(x => x === maxDice).length > 1 ? isTie = "True" : isTie = "False";
-    if (isTie === "True") {
-      $("#title").html("Tie, please try again!").addClass("red bigger").removeClass("green");;
-
-
-    } else if (isTie === "False") {
-      winnerPosition = diceValues.indexOf(maxDice);
-      chosen = userChoices[winnerPosition];
-    printWin();
-    console.log("winner: " + winnerPosition + " and chosen: " + chosen);
-    }
-  }
-
-if (noOfChoices === "4") { userChoices =[choice1,choice2,choice3,choice4];
-  diceValues.push(randomNumber1, randomNumber2, randomNumber3, randomNumber4);
-  let maxDice = Math.max(...diceValues);
-  diceValues.filter(x => x === maxDice).length > 1 ? isTie = "True" : isTie = "False";
-  if (isTie === "True") {
-    $("#title").html("Tie, please try again!").addClass("red bigger").removeClass("green");;
-  } else if (isTie === "False") {
-    winnerPosition = diceValues.indexOf(maxDice);
-    chosen = userChoices[winnerPosition];
-  printWin();
-  console.log("winner: " + winnerPosition + " and chosen: " + chosen);
-  }
-}
 });
+
+// Printing Winner
+function printWin() {
+  $("#title").html(winner + " wins! 🏆");
+  $("#title").addClass("greenify bigger").removeClass("redify");
+}
