@@ -1,11 +1,6 @@
-function diceRoll() {
-  // Random dice numbers
-  for (let i = 1; i < 5; i ++){
-    let imageSrc = "dice" + Math.floor(Math.random() * 6 + 1) + ".png";
-    document.querySelectorAll("img")[i].setAttribute("src", imageSrc);
-  }
-  
-  // Dice animation
+// Dice roll animation
+function playDiceRollAnimation() {
+  // Playing dice animation
   $(".dice").addClass("rotate").on("animationend", ()=>{
     $(".dice").removeClass("rotate");
   })
@@ -16,7 +11,7 @@ let dropdownOptions = document.querySelectorAll('#list li');
 dropdownOptions.forEach(dropdownOption => {
   dropdownOption.addEventListener('click', e => {
     let numberOfChoices = parseInt(e.target.innerText);
-    document.getElementById('dropdownMenu').innerHTML = `${numberOfChoices}<span class="caret"></span>`;
+    document.getElementById('noOfChoices').innerHTML = numberOfChoices;
     // Toggling the Number of Blanks and Dice
     switch(numberOfChoices) {
       case 2:
@@ -33,7 +28,7 @@ dropdownOptions.forEach(dropdownOption => {
   })
 })
 
-// Actively changing Dice Captions
+// Actively rendering Dice Captions
 let userInputFields = document.querySelectorAll('#userInputFields input');  
 userInputFields.forEach(((userInputField, i) => {
   userInputField.addEventListener('change', e => {
@@ -42,70 +37,64 @@ userInputFields.forEach(((userInputField, i) => {
   });
 }));
 
-// Declaring Variables
-var randomNo1 = 6, 
-randomNo2 = 6, 
-randomNo3 = 6,
-randomNo4 = 6;
-var Image1;
-var Image2;
-var Image3;
-var Image4;
-var isTie;
-var winNo;
-var userChoices = [];
-var winner;
-var winnerPosition;
-
 // Responding to Submit
 $("#submit").click(e => {
-  // Changes button html and roll dice
+  // Changes button html and rolls dice
   e.preventDefault();
   $("#submit").html("Again");
-  diceRoll();
 
   // Storing User inputs
-  var choice1 = $("#choice1").val();
-  var choice2 = $("#choice2").val();
-  var choice3 = $("#choice3").val();
-  var choice4 = $("#choice4").val();
-  var noOfChoices = parseInt($("#dropdownMenu").innerText);
-  var diceValues = [];
+  var userInput1 = $("#choice1").val();
+  var userInput2 = $("#choice2").val();
+  var userInput3 = $("#choice3").val();
+  var userInput4 = $("#choice4").val();
+  var numberOfChoices = parseInt(document.getElementById('noOfChoices').innerHTML);
 
+  // Generating random dice numbers
+  var randomNos = [];
+  for (let i = 1; i <= 4; i ++){
+    randomNo = Math.floor(Math.random() * 6 + 1);
+    let imageSrc = "dice" + randomNo + ".png";
+    randomNos.push(randomNo);
+    document.querySelectorAll("img")[i].setAttribute("src", imageSrc);
+  }
+  playDiceRollAnimation();
+
+  console.log(numberOfChoices);
   // Picking Winner
-  switch(noOfChoices) {
+  let maxDiceNo = 0;
+  switch(numberOfChoices) {
     case 2: 
-      if (randomNo1 === randomNo2) {
+      if (randomNos[0] === randomNos[1]) {
         $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");
-      } else if (randomNo1 > randomNo2) {
-        winner = choice1
+      } else if (randomNos[0] > randomNos[1]) {
+        winner = userInput1
         printWin(winner);
       } else {
-        winner = choice2;
+        winner = userInput2;
         printWin(winner);
       }
       break;
     case 3: 
-      userChoices = [choice1, choice2, choice3];
-      diceValues.push(randomNo1, randomNo2, randomNo3);
-      let maxDice = Math.max(...diceValues);
-      diceValues.filter(x => x === maxDice).length > 1 ? isTie = "True" : isTie = "False";
+      userChoices = [userInput1, userInput2, userInput3];
+      maxDiceNo = Math.max(...randomNos);
+      randomNos.filter(x => x === maxDiceNo).length > 1 ? isTie = "True" : isTie = "False";
       if (isTie === "True") {
         $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");;
       } else {
-        winnerPosition = diceValues.indexOf(maxDice);
+        winnerPosition = randomNos.indexOf(maxDiceNo);
         winner = userChoices[winnerPosition];
       printWin();
       }
       break;
     case 4: 
-      diceValues.push(randomNo1, randomNo2, randomNo3, randomNo4);
-      let maxDice2 = Math.max(...diceValues);
-      diceValues.filter(x => x === maxDice2).length > 1 ? isTie = "True" : isTie = "False";
+      userChoices = [userInput1, userInput2, userInput3, userInput4];
+      maxDiceNo = Math.max(...randomNos);
+      randomNos.filter(x => x === maxDiceNo).length > 1 ? isTie = "True" : isTie = "False";
       if (isTie === "True") {
         $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");;
       } else {
-        winnerPosition = diceValues.indexOf(maxDice2);
+        winnerPosition = randomNos.indexOf(maxDiceNo);
         winner = userChoices[winnerPosition];
       printWin();
       }
@@ -118,4 +107,3 @@ function printWin() {
   $("#title").html(winner + " wins! 🏆");
   $("#title").addClass("greenify bigger").removeClass("redify");
 }
-
