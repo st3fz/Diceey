@@ -66,7 +66,7 @@ $("#submit").click(e => {
   switch(numberOfChoices) {
     case 2: 
       if (randomNos[0] === randomNos[1]) {
-        $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");
+        printTie();
       } else if (randomNos[0] > randomNos[1]) {
         winner = userInput1
         printWin(winner);
@@ -80,7 +80,7 @@ $("#submit").click(e => {
       maxDiceNo = Math.max(...randomNos);
       randomNos.filter(x => x === maxDiceNo).length > 1 ? isTie = "True" : isTie = "False";
       if (isTie === "True") {
-        $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");;
+        printTie();
       } else {
         winnerPosition = randomNos.indexOf(maxDiceNo);
         winner = userChoices[winnerPosition];
@@ -92,7 +92,7 @@ $("#submit").click(e => {
       maxDiceNo = Math.max(...randomNos);
       randomNos.filter(x => x === maxDiceNo).length > 1 ? isTie = "True" : isTie = "False";
       if (isTie === "True") {
-        $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");;
+        printTie();
       } else {
         winnerPosition = randomNos.indexOf(maxDiceNo);
         winner = userChoices[winnerPosition];
@@ -101,6 +101,11 @@ $("#submit").click(e => {
       break;
   }
 });
+
+// Printing Tie
+function printTie() {
+  $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");
+}
 
 // Printing Winner
 function printWin() {
