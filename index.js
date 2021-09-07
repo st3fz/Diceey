@@ -104,11 +104,11 @@ $("#submit").click(e => {
 
 // Printing Tie
 function printTie() {
-  $("#title").html("Tie, please try again!").addClass("redify bigger").removeClass("greenify");
+  $("#title").html("Tie, please try again!").addClass("redify big-font").removeClass("greenify");
 }
 
 // Printing Winner
 function printWin() {
   $("#title").html(winner + " wins! 🏆");
-  $("#title").addClass("greenify bigger").removeClass("redify");
+  $("#title").addClass("greenify big-font").removeClass("redify");
 }
