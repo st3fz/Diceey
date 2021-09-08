@@ -6,6 +6,10 @@ function playDiceRollAnimation() {
   })
 }
 
+this.addEventListener("DOMContentLoaded", function() {
+  playDiceRollAnimation()
+});
+
 // Responding to Dropdown Menu
 let dropdownOptions = document.querySelectorAll('#list li');
 dropdownOptions.forEach(dropdownOption => {
@@ -40,14 +44,13 @@ userInputFields.forEach((userInputField, index) => {
 // Respond to Submit
 $("#submit").click(e => {
   e.preventDefault();
-  $("#submit").html("Again");
   playDiceRollAnimation();
-
-  var numberOfChoices = parseInt(document.getElementById('noOfChoices').innerHTML);
+  $("#submit").html("Again");
   
+  // Generate Diceroll values
+  var numberOfChoices = parseInt(document.getElementById('noOfChoices').innerHTML);
   var diceRolls = [];
   var userChoices = [];
-  // Generate Diceroll values
   for (let i = 1; i <= numberOfChoices; i++){
     diceRoll = Math.floor(Math.random()*6 + 1);
     document.querySelectorAll("img")[i].setAttribute("src", ("dice" + diceRoll + ".png"));
@@ -58,23 +61,15 @@ $("#submit").click(e => {
   
   // Pick highest Diceroll or Tie
   maxDiceRoll = Math.max(...diceRolls);
-  diceRolls.filter(n => n === maxDiceRoll).length > 1 ? isTie = true : isTie = false;
-  if (isTie === true) {
-    printTie();
-  } else {
+  diceRolls.filter(n => n === maxDiceRoll).length > 1 ? isTied = true : isTied = false;
+  if (!isTied) {
     winnerPosition = diceRolls.indexOf(maxDiceRoll);
-    winner = userChoices[winnerPosition];
-  printWin();
+    $("#title").html(userChoices[winnerPosition] + " wins! 🏆")
+    .addClass("greenify big-font")
+    .removeClass("redify");
+  } else {
+    $("#title").html("Tie, please try again!")
+    .addClass("redify big-font")
+    .removeClass("greenify");
   }
 });
-
-// Printing Tie
-function printTie() {
-  $("#title").html("Tie, please try again!").addClass("redify big-font").removeClass("greenify");
-}
-
-// Printing Winner
-function printWin() {
-  $("#title").html(winner + " wins! 🏆");
-  $("#title").addClass("greenify big-font").removeClass("redify");
-}
