@@ -42,28 +42,28 @@ userInputFields.forEach((userInputField, index) => {
 });
 
 // Respond to Submit
-$("#submit").click(e => {
+$("#submitButton").click(e => {
   e.preventDefault();
   playDiceRollAnimation();
-  $("#submit").html("Again");
+  $("#submitButton").html("Again");
   
   // Generate Diceroll values
   var numberOfChoices = parseInt(document.getElementById('noOfChoices').innerHTML);
-  var diceRolls = [];
+  var diceRollValues = [];
   var userChoices = [];
   for (let i = 1; i <= numberOfChoices; i++){
-    diceRoll = Math.floor(Math.random()*6 + 1);
-    document.querySelectorAll("img")[i].setAttribute("src", ("dice" + diceRoll + ".png"));
-    diceRolls.push(diceRoll);
+    diceRollValue = Math.floor(Math.random()*6 + 1);
+    document.querySelectorAll("img")[i].setAttribute("src", ("dice" + diceRollValue + ".png"));
+    diceRollValues.push(diceRollValue);
     // Storing User inputs
     userChoices.push($(`#choice-${i}`).val());
   }
   
   // Pick highest Diceroll or Tie
-  maxDiceRoll = Math.max(...diceRolls);
-  diceRolls.filter(n => n === maxDiceRoll).length > 1 ? isTied = true : isTied = false;
+  maxDiceRoll = Math.max(...diceRollValues);
+  diceRollValues.filter(n => n === maxDiceRoll).length > 1 ? isTied = true : isTied = false;
   if (!isTied) {
-    winnerPosition = diceRolls.indexOf(maxDiceRoll);
+    winnerPosition = diceRollValues.indexOf(maxDiceRoll);
     $("#title").html(userChoices[winnerPosition] + " wins! 🏆")
     .addClass("greenify big-font")
     .removeClass("redify");
